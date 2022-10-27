@@ -4,8 +4,6 @@ library(tuneR)
 
 ui <- fluidPage(
     titlePanel("Sampled Wave"),
-
-    # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(
             sliderInput("frequency",
@@ -32,7 +30,6 @@ ui <- fluidPage(
 )
 
 server <- function(input, output) {
-
     output$plot <- renderPlot({
         wave <- sine(input$frequency)
         plot_every <- reactive({floor(wave@samp.rate / input$sampleRate)})
