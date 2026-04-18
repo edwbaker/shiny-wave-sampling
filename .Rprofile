@@ -4,13 +4,16 @@ source("renv/activate.R")
 local({
   fix_cellar_gitignore <- function() {
     gi <- "renv/.gitignore"
-    if (file.exists(gi)) {
-      lines <- readLines(gi)
-      if ("cellar/" %in% lines) {
-        lines <- lines[lines != "cellar/"]
-        writeLines(lines, gi)
+    tryCatch({
+      if (file.exists(gi)) {
+        lines <- readLines(gi)
+        if ("cellar/" %in% lines) {
+          lines <- lines[lines != "cellar/"]
+          writeLines(lines, gi)
+        }
       }
-    }
+    }, warning = function(w) invisible(NULL),
+       error = function(e) invisible(NULL))
   }
   # Fix on session start
   fix_cellar_gitignore()

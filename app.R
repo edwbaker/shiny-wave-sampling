@@ -40,7 +40,7 @@ server <- function(input, output) {
         nhm_par()
         wave <- sine(input$frequency)
         plot_every <- reactive({floor(wave@samp.rate / input$sampleRate)})
-        waveSampled(wave, plot_every(), input$adcLevels)
+        waveSampled(wave, plot_every(), input$adcLevels, wave_col = nhm_colours()$lime)
     })
 }
 
