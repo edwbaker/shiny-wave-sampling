@@ -1,9 +1,13 @@
 library(shiny)
 library(figuREd)
 library(tuneR)
+library(shinynhm)
 
-ui <- fluidPage(
-    titlePanel("Sampled Wave"),
+ui <- nhm_page(
+    title = "Wave Sampling Demonstration",
+    description = "This app demonstrates the effects of sampling a sine wave at different frequencies, sample rates, and ADC levels.",
+    subbrand = "NHM Living Labs",
+    footer = FALSE,
     sidebarLayout(
         sidebarPanel(
             sliderInput("frequency",
@@ -24,13 +28,16 @@ ui <- fluidPage(
         ),
 
         mainPanel(
-           plotOutput("plot")
+           nhm_panel(
+               plotOutput("plot")
+           )
         )
     )
 )
 
 server <- function(input, output) {
     output$plot <- renderPlot({
+        nhm_par()
         wave <- sine(input$frequency)
         plot_every <- reactive({floor(wave@samp.rate / input$sampleRate)})
         waveSampled(wave, plot_every(), input$adcLevels)
